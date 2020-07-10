@@ -1,0 +1,14 @@
+project_name: go-genslice
+builds:
+  - binary: go-genslice
+    goos:
+      - darwin
+      - freebsd
+      - linux
+      - netbsd
+      - openbsd
+      - solaris
+      - windows
+    goarch:
+      - amd64
+      - 386
