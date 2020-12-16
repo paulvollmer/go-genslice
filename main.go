@@ -10,13 +10,20 @@ import (
 	"github.com/paulvollmer/go-genslice/generator"
 )
 
+func usage() {
+	fmt.Print("Usage: go-genslice [flags]\n\n")
+	fmt.Print("Flags:\n")
+	flag.PrintDefaults()
+}
+
 func main() {
 	flagDatasource := flag.String("d", "", "path to a line separated input source")
 	flagPackageName := flag.String("p", "main", "the package name")
 	flagVarName := flag.String("v", "Data", "the variable name")
-	flagVarType := flag.String("t", "string", "the variable type")
+	flagVarType := flag.String("t", "string", "the variable type can be 'string' or 'byte'")
 	flagSort := flag.Bool("s", false, "sort the input data")
 	flagPrintDefaultTemplate := flag.Bool("print-default-template", false, "print the default template to stdout and exit")
+	flag.Usage = usage
 	flag.Parse()
 
 	if *flagPrintDefaultTemplate {
@@ -26,6 +33,11 @@ func main() {
 
 	if *flagDatasource == "" {
 		fmt.Println("missing -d flag")
+		os.Exit(2)
+	}
+
+	if *flagVarType != "string" && *flagVarType != "byte" {
+		fmt.Println("unknown type. use 'string' or 'byte'")
 		os.Exit(2)
 	}
 
